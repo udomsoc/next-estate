@@ -14,25 +14,7 @@ import {
 } from '@clerk/nextjs'
 
 export default function Header() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState('');
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(searchParams);
-    const searchTermFromUrl = urlParams.get('searchTerm');
-    if (searchTermFromUrl) {
-      setSearchTerm(searchTermFromUrl);
-    }
-  }, [searchParams]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const urlParams = new URLSearchParams(searchParams);
-    urlParams.set('searchTerm', searchTerm);
-    const searchQuery = urlParams.toString();
-    router.push(`/search?${searchQuery}`);
-  };
+  
   
   return (
     <header className='bg-slate-200 shadow-md'>
@@ -45,14 +27,11 @@ export default function Header() {
         </Link>
         <form
           className='bg-slate-100 p-3 rounded-lg flex items-center'
-          onSubmit={handleSubmit}
         >
           <input
             type='text'
             placeholder='Search...'
             className='bg-transparent focus:outline-none w-24 sm:w-64'
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button>
             <FaSearch className='text-slate-600' />
