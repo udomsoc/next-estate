@@ -50,11 +50,11 @@ export async function POST(req) {
   // For this guide, log payload to console
   const { id } = evt?.data
   const eventType = evt?.type
-  //console.log(`Received webhook with ID ${id} and event type of ${eventType}`)
+  console.log(`Received webhook with ID ${id} and event type of ${eventType}`)
   //console.log('Webhook payload:', body)
 
   if (eventType === 'user.created' || eventType === 'user.updated') {
-    const { first_name, last_name, image_url, email_addresses } = evt.data;
+    const { first_name, last_name, image_url, email_addresses } = evt?.data;
     try {
       const user = await createOrUpdateUser(
         id,
@@ -66,6 +66,9 @@ export async function POST(req) {
 
       if (user && eventType === 'user.created') {
         try {           
+
+            console.log('clekClient: ', clerkClient.users);
+
             await clerkClient.users.updateUserMetadata(id, {
                 publicMetadata: {
                     userMongoId: user._id,
